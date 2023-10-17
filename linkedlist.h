@@ -25,8 +25,9 @@ class linkedlist
         void AddBehind(element *target, element *pnew);
         void deleteNode(element *pnew);
         void reduce();
-
-
+        void sortList();
+        void add(linkedlist *, linkedlist *);
+        void multiple(linkedlist*,linkedlist*);
     protected:
 };
 #endif //LINKEDLIST_H

@@ -126,11 +126,120 @@ void linkedlist::reduce()
     while( p != nullptr)
     {
         element *q=p->Getpointer();
-        while(q = this->tail)
+        while(q!=nullptr)
         {
-             
-            q->Getpointer();
+            if(q->GetExponent() == p->GetExponent())
+            {
+                p->Setdata(p->Getdata() + q->Getdata());
+                deleteNode(q);
+            } 
+            q = q->Getpointer();
+            
         }
         p = p->Getpointer();
     }
+}
+
+// void linkedlist::add(linkedlist* a, linkedlist* b)
+// {   a->reduce();//rút gọn đa thức a , b trước khi cộng 
+//     b->reduce();
+//     element *p = a->head;
+//     while( p != nullptr)
+//     {
+//         element *q= b->head;
+//         while(q!=nullptr)
+//         {   // thêm sửa tại đây :
+//             if(q->GetExponent() == p->GetExponent())
+//             {   element* x = new element;
+//                 x->Setdata(q->Getdata() + p->Getdata());
+//                 x->SetExponent(q->GetExponent());
+//                 this->InsertTail(x);
+//             } 
+//             q = q->Getpointer();
+            
+//         }
+//         p = p->Getpointer();
+//     }
+    
+    
+// }
+void linkedlist::sortList() {
+    if (this->head == nullptr) return;  // List is empty
+
+    element *i = this->head;
+    while (i != nullptr) {
+        element *j = i->Getpointer();
+        while (j != nullptr) {
+            if (i->GetExponent() < j->GetExponent()) {
+                // Swap the data and exponent of i and j
+                int tempData = i->Getdata();
+                int tempExponent = i->GetExponent();
+                
+                i->Setdata(j->Getdata());
+                i->SetExponent(j->GetExponent());
+                
+                j->Setdata(tempData);
+                j->SetExponent(tempExponent);
+            }
+            j = j->Getpointer();
+        }
+        i = i->Getpointer();
+    }
+}
+
+void linkedlist::add(linkedlist *a, linkedlist *b) {
+    a->sortList();  
+    b->sortList();  
+
+    a->reduce();  // Simplify the polynomials
+    b->reduce();
+
+    element *p = a->head;
+    element *q = b->head;
+
+    while (p != nullptr || q != nullptr) {
+        if (p != nullptr && q != nullptr) {
+            if (p->GetExponent() == q->GetExponent()) {
+                element *x = new element;
+                x->Setdata(p->Getdata() + q->Getdata());
+                x->SetExponent(p->GetExponent());
+                this->InsertTail(x);
+                p = p->Getpointer();
+                q = q->Getpointer();
+            } else if (p->GetExponent() < q->GetExponent()) {
+                this->InsertTail(p);  // Clone p before inserting if needed
+                p = p->Getpointer();
+            } else {
+                this->InsertTail(q);  // Clone q before inserting if needed
+                q = q->Getpointer();
+            }
+        } else if (p != nullptr) {
+            this->InsertTail(p);  // Clone p before inserting if needed
+            p = p->Getpointer();
+        } else {
+            this->InsertTail(q);  // Clone q before inserting if needed
+            q = q->Getpointer();
+        }
+    }
+}
+
+
+void linkedlist::multiple(linkedlist * a, linkedlist *b)
+{  // linkedlist* result = new linkedlist();
+    element* p = a->head;
+    element* q ;
+    while(p != nullptr)
+    {
+        q = b->head;
+        while(q != nullptr){
+            // handle multiply polymonials
+            element* x = new element;
+            x->Setdata(p->Getdata() * q->Getdata());
+            x->SetExponent(p->GetExponent() + q->GetExponent());
+            this->InsertTail(x);
+            q= q->Getpointer();
+        }
+        p=p->Getpointer();
+    }
+    //result->reduce();// rút gọn
 }

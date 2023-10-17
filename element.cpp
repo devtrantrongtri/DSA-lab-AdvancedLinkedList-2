@@ -6,7 +6,7 @@ element::element()
     this->exponent = 0;
     this ->pointer = nullptr;
 
-}
+}// nX^m data :n ; exponent : m ; 
 element::element(int data, int exponent)
 {
     this ->data = data;

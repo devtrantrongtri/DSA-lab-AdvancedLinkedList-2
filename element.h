@@ -1,6 +1,6 @@
 #ifndef ELEMENT_H
 #define ELEMENT_H
-class element
+class element // element ở đây đại diện cho từng phần tử trong polymonial .
 {
     private:
         int data;
